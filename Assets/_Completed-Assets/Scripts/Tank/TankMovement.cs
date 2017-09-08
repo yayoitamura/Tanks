@@ -22,12 +22,19 @@ namespace Complete
 
         private void Awake ()
         {
+
+//			Debug.Log (m_Speed);
+//			m_Speed *= 9;
+//			Debug.Log (m_Speed);
+
+
             m_Rigidbody = GetComponent<Rigidbody> ();
         }
 
 
         private void OnEnable ()
         {
+
             // When the tank is turned on, make sure it's not kinematic.
             m_Rigidbody.isKinematic = false;
 
@@ -61,6 +68,7 @@ namespace Complete
 
         private void Start ()
         {
+
             // The axes names are based on player number.
             m_MovementAxisName = "Vertical" + m_PlayerNumber;
             m_TurnAxisName = "Horizontal" + m_PlayerNumber;
@@ -137,5 +145,17 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
         }
+
+
+		void OnTriggerEnter(Collider other) {
+			if (other.CompareTag ("Item")) {
+				m_Speed *= 2;
+				Debug.Log (m_Speed);
+				Destroy (other.gameObject);
+//				Debug.Log ("AAAAA");
+			}
+
+		}
+
     }
 }

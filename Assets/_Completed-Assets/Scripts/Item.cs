@@ -4,7 +4,7 @@ using System.Collections;
 public class Item : MonoBehaviour
 {
 
-	void OnTriggerEnter (Collider hit)
+/*	void OnTriggerEnter (Collider hit)
 	{
 
 		if (hit.CompareTag ("Player")) {
@@ -12,5 +12,5 @@ public class Item : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-
+*/
 }

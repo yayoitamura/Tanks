@@ -140,21 +140,14 @@ namespace Complete
             m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
         }
 
-		/*aa
 		void OnTriggerEnter(Collider other) {
-//			Debug.Log (other.ToString ());
 
 			if (other.ToString () == "Speed (UnityEngine.BoxCollider)") {
 				m_Speed *= 3;
 
-//				Debug.Log (other.CompareTag ("Item"));
-//				Debug.Log (other.ToString ());
-//				Debug.Log (m_Speed);
-
 				Destroy (other.gameObject);
 			}
-
-		}*/
+		}
 
     }
 }

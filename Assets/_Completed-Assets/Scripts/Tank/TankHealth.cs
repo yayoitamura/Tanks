@@ -92,24 +92,14 @@ namespace Complete
 
 		void OnTriggerEnter(Collider other) {
 
-			TankMovement d2 = refObj.GetComponent<Complete.TankMovement>();
-
 			if (other.ToString () == "Hp (UnityEngine.BoxCollider)") 
 			
 			{
 				m_CurrentHealth += 500;
 				Destroy (other.gameObject);
 			}
-
-
-			else if (other.ToString () == "Speed (UnityEngine.BoxCollider)") 
-			
-			{
-				d2.m_Speed *= 3;
-				Destroy (other.gameObject);
-			}
+				
 		}
-
 
     }
 

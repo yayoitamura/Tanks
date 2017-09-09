@@ -5,7 +5,7 @@ namespace Complete
 {
     public class TankShooting : MonoBehaviour
     {
-        public int m_PlayerNumber = 1;              // Used to identify the different players.
+        public int m_PlayerNumber;              // Used to identify the different players.
         public Rigidbody m_Shell;                   // Prefab of the shell.
         public Transform m_FireTransform;           // A child of the tank where the shells are spawned.
         public Slider m_AimSlider;                  // A child of the tank that displays the current launch force.
@@ -16,6 +16,7 @@ namespace Complete
         public float m_MaxLaunchForce = 30f;        // The force given to the shell if the fire button is held for the max charge time.
         public float m_MaxChargeTime = 0.75f;       // How long the shell can charge for before it is fired at max force.
 
+		public GameObject refObj;
 
         private string m_FireButton;                // The input axis that is used for launching shells.
         private float m_CurrentLaunchForce;         // The force that will be given to the shell when the fire button is released.
@@ -100,5 +101,20 @@ namespace Complete
             // Reset the launch force.  This is a precaution in case of missing button events.
             m_CurrentLaunchForce = m_MinLaunchForce;
         }
+
+
+
+		void OnTriggerEnter(Collider other) {
+
+			ShellExplosion d2 = refObj.GetComponent<Complete.ShellExplosion>();
+
+			if (other.ToString () == "Power (UnityEngine.BoxCollider)") 
+
+			{
+				d2.m_MaxDamage *= 9;
+				Destroy (other.gameObject);
+			}
+		}
+
     }
 }

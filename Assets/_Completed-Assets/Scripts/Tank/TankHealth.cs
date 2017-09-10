@@ -92,12 +92,24 @@ namespace Complete
 
 		void OnTriggerEnter(Collider other) {
 
-			if (other.ToString () == "Hp (UnityEngine.BoxCollider)") 
-			
+			if (other.ToString () == "Hp (UnityEngine.BoxCollider)")
 			{
 				m_CurrentHealth += 500;
 				Destroy (other.gameObject);
+
 			}
+
+//			else if (other.ToString () == "Enemy (UnityEngine.CapsuleCollider)")
+//				{
+//					float damage = 500;
+
+					// このダメージをタンクに適用
+//					TakeDamage (damage);
+
+//					Debug.Log (m_CurrentHealth);
+
+//				}
+					
 				
 		}
 

@@ -38,18 +38,19 @@ namespace Complete
                 // Add an explosion force.
                 targetRigidbody.AddExplosionForce (m_ExplosionForce, transform.position, m_ExplosionRadius);
 
+				//Enemyへの攻撃
                 // Find the TankHealth script associated with the rigidbody.
-                TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth> ();
+				Enemy targetEnemy = targetRigidbody.GetComponent<Enemy> ();
 
                 // If there is no TankHealth script attached to the gameobject, go on to the next collider.
-                if (!targetHealth)
+				if (!targetEnemy)
                     continue;
 
                 // Calculate the amount of damage the target should take based on it's distance from the shell.
                 float damage = CalculateDamage (targetRigidbody.position);
 
                 // Deal this damage to the tank.
-                targetHealth.TakeDamage (damage);
+				targetEnemy.TakeDamage (damage);
             }
 
             // Unparent the particles from the shell.

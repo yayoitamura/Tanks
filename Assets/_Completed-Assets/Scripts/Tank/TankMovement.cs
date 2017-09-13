@@ -143,7 +143,7 @@ namespace Complete
 		void OnTriggerEnter(Collider other) {
 
 			if (other.ToString () == "Speed (UnityEngine.BoxCollider)") {
-				m_Speed *= 3;
+				m_Speed *= 1;
 
 				Destroy (other.gameObject);
 			}

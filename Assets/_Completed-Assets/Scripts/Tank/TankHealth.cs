@@ -99,16 +99,16 @@ namespace Complete
 
 			}
 
-//			else if (other.ToString () == "Enemy (UnityEngine.CapsuleCollider)")
-//				{
-//					float damage = 500;
+			else if (other.CompareTag("Enemy"))
+				{
+					float damage = 500;
 
 					// このダメージをタンクに適用
-//					TakeDamage (damage);
+					TakeDamage (damage);
 
-//					Debug.Log (m_CurrentHealth);
+					Debug.Log (m_CurrentHealth);
 
-//				}
+				}
 					
 				
 		}

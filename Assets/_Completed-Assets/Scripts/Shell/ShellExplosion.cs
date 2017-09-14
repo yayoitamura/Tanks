@@ -50,7 +50,7 @@ namespace Complete
                 float damage = CalculateDamage (targetRigidbody.position);
 
                 // Deal this damage to the tank.
-				targetEnemy.TakeDamage (damage);
+//				targetEnemy.TakeDamage (damage);
             }
 
             // Unparent the particles from the shell.

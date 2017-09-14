@@ -44,17 +44,18 @@ public class Enemy : MonoBehaviour
 
 		if (other.CompareTag("Player"))
 		{
-//			OnDeath ();
-
-
-			GetAnimator().SetTrigger("Damage");
-
+//			SlimDamege().SetTrigger("Damage");
+			SlimDead().SetTrigger("Dead");
 		}
 	}
 
-	public Animator GetAnimator()
+	public Animator SlimDamege()
 	{
 		return animator;
 	}
 		
+	public Animator SlimDead()
+	{
+		return animator;
+	}
 }

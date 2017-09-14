@@ -98,8 +98,9 @@ namespace Complete
 
 			else if (other.CompareTag("Enemy"))
 				{
-					float damage = 500;
-					TakeDamage (damage);
+				Debug.Log ("E");
+				float damage = 500;
+				TakeDamage (damage);
 
 				}
 					

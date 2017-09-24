@@ -96,7 +96,7 @@ namespace Complete
 
 			}
 
-			else if (other.CompareTag("Enemy"))
+			else if (other.tag == "Enemy")
 				{
 				Debug.Log ("E");
 				float damage = 500;

@@ -40,7 +40,7 @@ public class Boss : MonoBehaviour
 
 		if (other.CompareTag("Player"))
 		{
-			Destroy (gameObject);
+//			Destroy (gameObject);
 		}
 	}
 

@@ -13,22 +13,22 @@ public class SearchPlayer : MonoBehaviour {
 	}
 
 	void Update () {
-        Vector3 target = GameObject.FindGameObjectWithTag("Player").transform.position;		
-        agent.destination = target;
+        //Vector3 target = GameObject.FindGameObjectWithTag("Player").transform.position;		
+        //agent.destination = target;
 
 	}
 
 	//BossのPlayer探索範囲につけた当たり判定
-	void OnTriggerEnter(Collider other) {
-  //      GameObject targetPlayer = GameObject.FindGameObjectWithTag("Player");
+	void OnTriggerStay(Collider other) {
+		Vector3 target = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-		//if (other.CompareTag("Player")){
-            //agent.destination = target.transform.position;
+		if (other.CompareTag("Player")){
+		agent.destination = target;
 
-            //Destroy(gameObject);
-			//isDetectPlayer = true;
-			//lookTarget = other.transform;
-		//}
+		//Destroy(gameObject);
+		//isDetectPlayer = true;
+		//lookTarget = other.transform;
+		}
 	}
 
 	//void OnTriggerExit(Collider other){

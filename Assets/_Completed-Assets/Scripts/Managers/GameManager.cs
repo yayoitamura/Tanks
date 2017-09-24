@@ -13,10 +13,10 @@ namespace Complete
         public CameraControl m_CameraControl;       // Reference to the CameraControl script for control during different phases.
         public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
         public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
-        public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
+        public TankManager[] m_Tanks;                // 異なるタンクの様相を有効/無効にするマネージャーの集合。
 
-        
-        private int m_RoundNumber;                  // Which round the game is currently on.
+
+		private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
         private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
         private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
@@ -65,7 +65,7 @@ namespace Complete
             }
 
             // These are the targets the camera should follow.
-            m_CameraControl.m_Targets = targets;
+            m_CameraControl.m_Target = targets[0];
         }
 
 
@@ -173,7 +173,7 @@ namespace Complete
             }
 
             // If there are one or fewer tanks remaining return true, otherwise return false.
-            return numTanksLeft <= 1;
+            return numTanksLeft <= 0;
         }
         
         

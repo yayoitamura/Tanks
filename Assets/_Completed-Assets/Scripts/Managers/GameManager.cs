@@ -157,24 +157,24 @@ namespace Complete
             yield return m_EndWait;
         }
 
-
+        //
         // This is used to check if there is one or fewer tanks remaining and thus the round should end.
-        private bool OneTankLeft()
-        {
-            // Start the count of tanks left at zero.
-            int numTanksLeft = 0;
+        //private bool OneTankLeft()
+        //{
+        //    // Start the count of tanks left at zero.
+        //    int numTanksLeft = 0;
 
-            // Go through all the tanks...
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                // ... and if they are active, increment the counter.
-                if (m_Tanks[i].m_Instance.activeSelf)
-                    numTanksLeft++;
-            }
+        //    // Go through all the tanks...
+        //    for (int i = 0; i < m_Tanks.Length; i++)
+        //    {
+        //        // ... and if they are active, increment the counter.
+        //        if (m_Tanks[i].m_Instance.activeSelf)
+        //            numTanksLeft++;
+        //    }
 
-            // If there are one or fewer tanks remaining return true, otherwise return false.
-            return numTanksLeft <= 1;
-        }
+        //    // If there are one or fewer tanks remaining return true, otherwise return false.
+        //    return numTanksLeft <= 1;
+        //}
         
         
         // This function is to find out if there is a winner of the round.

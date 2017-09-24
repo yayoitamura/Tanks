@@ -11,14 +11,10 @@ public class Boss : MonoBehaviour
 	private ParticleSystem m_ExplosionParticles;        // タンクが破壊されたときに再生するパーティクルシステム
 	private float m_CurrentHealth;                      // 現在のタンクの体力値
 	private bool m_Dead;                                // タンクの体力値が 0 を下回ったかどうか
-	//a
-	private Animator animator;
 
 	private void Awake ()
 	{
 
-		//a
-		animator = GetComponent<Animator> ();
 
 		//爆発のプレハブをインスタンスにして、そのパーティクルシステムへの参照を取得
 		m_ExplosionParticles = Instantiate (m_ExplosionPrefab).GetComponent<ParticleSystem> ();
@@ -44,18 +40,8 @@ public class Boss : MonoBehaviour
 
 		if (other.CompareTag("Player"))
 		{
-			//			SlimDamege().SetTrigger("Damage");
-			SlimDead().SetTrigger("Dead");
+			Destroy (gameObject);
 		}
 	}
 
-	public Animator SlimDamege()
-	{
-		return animator;
-	}
-
-	public Animator SlimDead()
-	{
-		return animator;
-	}
 }

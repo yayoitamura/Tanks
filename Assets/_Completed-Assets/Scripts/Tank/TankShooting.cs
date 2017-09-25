@@ -34,10 +34,10 @@ namespace Complete
         private void Start ()
         {
             // The fire axis is based on the player number.
-            m_FireButton = "Fire" + m_PlayerNumber;
+            m_FireButton = "Fire1";// + m_PlayerNumber
 
-            // The rate that the launch force charges up is the range of possible forces by the max charge time.
-            m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
+			// The rate that the launch force charges up is the range of possible forces by the max charge time.
+			m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         }
 
 

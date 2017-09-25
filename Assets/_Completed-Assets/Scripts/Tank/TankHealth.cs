@@ -98,7 +98,6 @@ namespace Complete
 
 			else if (other.tag == "Enemy")
 				{
-				Debug.Log ("E");
 				float damage = 500;
 				TakeDamage (damage);
 

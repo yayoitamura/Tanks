@@ -7,8 +7,8 @@ public class SearchPlayer : MonoBehaviour {
 
 	public Rigidbody m_Shell;                   // Prefab of the shell.
 	public Transform m_FireTransform;
-	private float m_CurrentLaunchForce = 5;
-    private bool flag = true;
+    private float m_CurrentLaunchForce = 20f;
+    private bool flag = false;
 
 //    public Transform target;
 	private NavMeshAgent agent;

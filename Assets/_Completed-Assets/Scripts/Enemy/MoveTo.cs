@@ -31,6 +31,7 @@ public class MoveTo : MonoBehaviour {
 		// Set the agent to go to the currently selected destination.現在選択されている宛先に移動するようにエージェントを設定します。
 		agent.destination = points[destPoint].position;
 
+
 		// Choose the next point in the array as the destination,
 		// cycling to the start if necessary.
 		//配列内の次の点を宛先として選択し、

@@ -43,8 +43,8 @@ namespace Complete
             //for (int i = 0; i < m_Tanks.Length; i++)
             //{
 
-            Debug.Log(m_Tank);
-            Debug.Log(m_Tank.m_SpawnPoint);
+            //Debug.Log(m_Tank);
+            //Debug.Log(m_Tank.m_SpawnPoint);
 
                 // ... create them, set their player number and references needed for control.
             m_Tank.m_Instance =
@@ -57,7 +57,7 @@ namespace Complete
 
         private void SetCameraTargets()
         {
-            Debug.Log(m_Tank);
+  
             // Create a collection of transforms the same size as the number of tanks.
             //Transform target = new Transform();
 
@@ -66,7 +66,7 @@ namespace Complete
             //{
                 // ... set it to the appropriate tank transform.
             Transform target = m_Tank.m_Instance.transform;
-            Debug.Log(m_Tank);
+
             //}
 
             // These are the targets the camera should follow.

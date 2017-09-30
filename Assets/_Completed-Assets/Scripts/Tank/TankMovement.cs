@@ -37,10 +37,13 @@ namespace Complete
             m_MovementInputValue = 0f;
             m_TurnInputValue = 0f;
 
-            // We grab all the Particle systems child of that Tank to be able to Stop/Play them on Deactivate/Activate
-            // It is needed because we move the Tank when spawning it, and if the Particle System is playing while we do that
-            // it "think" it move from (0,0,0) to the spawn point, creating a huge trail of smoke
-            m_particleSystems = GetComponentsInChildren<ParticleSystem>();
+			// We grab all the Particle systems child of that Tank to be able to Stop/Play them on Deactivate/Activate
+			// It is needed because we move the Tank when spawning it, and if the Particle System is playing while we do that
+			// it "think" it move from (0,0,0) to the spawn point, creating a huge trail of smoke
+			//そのタンクのすべてのパーティクルシステムの子供をつかんで、それらを停止 / プレイできるようにします。Deactivate / Activate
+			//それを生成するときにタンクを移動する必要があります。パーティクルシステムが再生中にパーティクルシステムが再生している場合は、（0,0,0）からスポーンポイントに移動して煙の巨大な痕跡を作成すると思っています
+
+			m_particleSystems = GetComponentsInChildren<ParticleSystem>();
             for (int i = 0; i < m_particleSystems.Length; ++i)
             {
                 m_particleSystems[i].Play();

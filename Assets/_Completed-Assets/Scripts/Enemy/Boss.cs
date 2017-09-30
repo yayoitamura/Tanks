@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
 	public float m_StartingHealth = 1f;               // 開始時の各タンクの体力の値
-	public GameObject m_ExplosionPrefab;                // Awake でインスタンスにされ、その後、タンクが倒されると常に使用されるプレハブ
+	public GameObject m_ExplosionPrefab;                // タンクが倒されると使用されるプレハブ
 
 
 	//	private AudioSource m_ExplosionAudio;               // タンクが爆発したときに再生するオーディオ
@@ -36,11 +36,36 @@ public class Boss : MonoBehaviour
 	}
 
 
-	void OnTriggerEnter(Collider other) {
+	//void OnTriggerEnter(Collider other) {
 
+	//	if (other.CompareTag("Player"))
+	//	{
+	//		Destroy (gameObject);
+	//	}
+	//}
+
+	//void OnTriggerEnter(Collider other)
+	//{
+
+	//        if (other.tag == "Player")
+	//       	{
+	//		//float damage = 500;
+	//		//TakeDamage(damage);
+	//		Destroy(gameObject);
+
+	//	    }
+
+
+	//}
+
+	void OnTriggerEnter(Collider other)
+	{
+		Debug.Log(other.tag + "tag");
+
+		//砲弾に当たるとDamage再生、削除
 		if (other.CompareTag("Player"))
 		{
-//			Destroy (gameObject);
+			Destroy(gameObject, 2f);
 		}
 	}
 

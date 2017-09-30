@@ -16,9 +16,9 @@ public class Enemy : MonoBehaviour
 		animator = GetComponent<Animator> ();
 
 
-		Rigidbody shellInstance =
-		Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-		shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+		//Rigidbody shellInstance =
+		//Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+		//shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
 
 	}
 
@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
 
 
 	void OnTriggerEnter(Collider other) {
+        Debug.Log(other.tag + "tag");
+
 		//砲弾に当たるとDamage再生、削除
 		if (other.CompareTag("Player"))
 		{

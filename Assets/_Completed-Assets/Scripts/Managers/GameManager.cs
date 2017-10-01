@@ -7,14 +7,14 @@ namespace Complete
 {
     public class GameManager : MonoBehaviour
     {
-        public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
+        public int m_NumRoundsToWin = 1;            // The number of rounds a single player has to win to win the game.
         public float m_StartDelay = 1f;             // The delay between the start of RoundStarting and RoundPlaying phases.
         public float m_EndDelay = 1f;               // The delay between the end of RoundPlaying and RoundEnding phases.
         public CameraControl m_CameraControl;       // Reference to the CameraControl script for control during different phases.
         public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
         public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
         public TankManager m_Tank;                // 異なるタンクの様相を有効/無効にするマネージャーの集合。
-
+        public Boss m_Boss;
 
 		private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
@@ -25,29 +25,32 @@ namespace Complete
 
         private void Start()
         {
-            // Create the delays so they only have to be made once.
-            m_StartWait = new WaitForSeconds (m_StartDelay);
+			// Create the delays so they only have to be made once.
+			// 遅延を作成。1 度作れば、繰り返し作る必要がありません。
+			m_StartWait = new WaitForSeconds (m_StartDelay);
             m_EndWait = new WaitForSeconds (m_EndDelay);
 
             SpawnAllTanks();
             SetCameraTargets();
 
-            // Once the tanks have been created and the camera is using them as targets, start the game.
-            StartCoroutine (GameLoop ());
+			// Once the tanks have been created and the camera is using them as targets, start the game.
+			// タンクを作ってカメラがそれをターゲットにしたら、ゲームを開始します
+			StartCoroutine (GameLoop ());
         }
 
 
         private void SpawnAllTanks()
         {
-            // For all the tanks...
-            //for (int i = 0; i < m_Tanks.Length; i++)
-            //{
+			// For all the tanks...
+			//for (int i = 0; i < m_Tanks.Length; i++)
+			//{
 
-            //Debug.Log(m_Tank);
-            //Debug.Log(m_Tank.m_SpawnPoint);
+			//Debug.Log(m_Tank);
+			//Debug.Log(m_Tank.m_SpawnPoint);
 
-                // ... create them, set their player number and references needed for control.
-            m_Tank.m_Instance =
+			// ... create them, set their player number and references needed for control.
+			// ... タンクを作って、制御に必要なプレイヤー番号と参照を設定します。
+			m_Tank.m_Instance =
                       Instantiate(m_TankPrefab, m_Tank.m_SpawnPoint.position, m_Tank.m_SpawnPoint.rotation) as GameObject;
                 //m_Tanks[i].m_PlayerNumber = 1;
             m_Tank.Setup();
@@ -86,18 +89,19 @@ namespace Complete
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine (RoundEnding());
 
-            // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
-            if (m_GameWinner != null)
-            {
-                // If there is a game winner, restart the level.
-                SceneManager.LoadScene (0);
-            }
-            else
-            {
-                // If there isn't a winner yet, restart this coroutine so the loop continues.
-                // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
-                StartCoroutine (GameLoop ());
-            }
+			//// This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
+			//if (m_GameWinner != null)
+			//{
+			//    // If there is a game winner, restart the level.
+			//    SceneManager.LoadScene (0);
+			//}
+			//else
+			//{
+			//    // If there isn't a winner yet, restart this coroutine so the loop continues.
+			//    // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
+			//    StartCoroutine (GameLoop ());
+			//}
+			m_MessageText.text = "Finish";
         }
 
 
@@ -112,7 +116,7 @@ namespace Complete
 
             // Increment the round number and display text showing the players what round it is.
             m_RoundNumber++;
-            m_MessageText.text = "ROUND " + m_RoundNumber;
+            m_MessageText.text = "Play"; // + m_RoundNumber;
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return m_StartWait;
@@ -127,8 +131,8 @@ namespace Complete
             // Clear the text from the screen.
             m_MessageText.text = string.Empty;
 
-            // While there is not one tank left...
-            while (!OneTankLeft())
+			// While there is not one tank left...
+			while (m_Boss.BossDestroy != true)
             {
                 // ... return on the next frame.
                 yield return null;

@@ -51,6 +51,48 @@ public class Boss : MonoBehaviour
 		m_FillImage.color = Color.Lerp(m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
 	}
 
+	public void TakeDamage(float amount)
+	{
+		// 受けたダメージに基づいて現在の体力を削減
+		// 適切な UI 要素に変更
+		// 現在の体力が 0 を下回り、かつ、まだ登録されていなければ、 OnDeath を呼び出します。
+		// Reduce current health by the amount of damage done.
+		m_CurrentHealth -= amount;
+
+		// Change the UI elements appropriately.
+		SetHealthUI();
+
+		// If the current health is at or below zero and it has not yet been registered, call OnDeath.
+        if (m_CurrentHealth <= 0f && !BossDestroy)
+		{
+			OnDeath();
+		}
+	}
+
+	private void OnDeath()
+	{
+		// フラグを設定して、この関数が1 度しか呼び出されないようにします。
+		// インスタンスにした爆発のプレハブをタンクの位置に移動し、有効にします。
+		// タンクの爆発のパーティクルシステムを再生します。
+		// タンクの爆発のサウンドエフェクトを再生します。
+		// タンクをオフにします。
+		// Set the flag so that this function is only called once.
+        BossDestroy = true;
+
+		// Move the instantiated explosion prefab to the tank's position and turn it on.
+		m_ExplosionParticles.transform.position = transform.position;
+		m_ExplosionParticles.gameObject.SetActive(true);
+
+		// Play the particle system of the tank exploding.
+		m_ExplosionParticles.Play();
+
+		// Play the tank explosion sound effect.
+		//m_ExplosionAudio.Play();
+
+		// Turn the tank off.
+		gameObject.SetActive(false);
+	}
+
 
 	//void OnTriggerEnter(Collider other) {
 
@@ -81,9 +123,12 @@ public class Boss : MonoBehaviour
 		//砲弾に当たるとDamage再生、削除
 		if (other.CompareTag("Shell"))
 		{
-			BossDestroy = true;
+			//BossDestroy = true;
 
-            Destroy(gameObject.transform.parent.gameObject);
+			//Destroy(gameObject.transform.parent.gameObject);
+			float damage = 50;
+			TakeDamage(damage);
+
 		}
 	}
 

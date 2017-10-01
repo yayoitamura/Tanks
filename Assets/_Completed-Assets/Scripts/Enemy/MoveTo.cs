@@ -12,10 +12,6 @@ public class MoveTo : MonoBehaviour {
 
 	void Start () {
 		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-
-		// Disabling auto-braking allows for continuous movement
-		// between points (ie, the agent doesn't slow down as it
-		// approaches a destination point).
 		//自動制動を無効にすると、ポイント間の連続的な移動が可能になります（つまり、エージェントは目的地に近づくにつれて速度が低下しません）。
 		agent.autoBraking = false;
 

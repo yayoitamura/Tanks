@@ -9,6 +9,8 @@ public class SearchPlayer : MonoBehaviour {
 	public Transform m_FireTransform;
     private float m_CurrentLaunchForce = 20f;
     private bool flag = false;
+	public Boss m_Boss;
+
 
 //    public Transform target;
 	private NavMeshAgent agent;
@@ -25,6 +27,7 @@ public class SearchPlayer : MonoBehaviour {
 		while (true)
 		{
             Atack();
+            flag = false;
 			yield return new WaitForSeconds(1f);
 		}
 	}
@@ -45,9 +48,8 @@ public class SearchPlayer : MonoBehaviour {
 	//BossのPlayer探索範囲につけた当たり判定
     void OnTriggerStay(Collider other) {
 		Vector3 target = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-        if (other.CompareTag("Player")){ 
-
+        //Debug.Log(agent);
+        if (other.CompareTag("Player") && !m_Boss.BossDestroy){
 			//追跡
 			agent.destination = target;
             flag = true;
@@ -63,6 +65,8 @@ public class SearchPlayer : MonoBehaviour {
             flag = false;
         }
  	}
+
+
 
 }
 

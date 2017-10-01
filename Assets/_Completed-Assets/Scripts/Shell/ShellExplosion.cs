@@ -22,8 +22,8 @@ namespace Complete
 
         private void OnTriggerEnter (Collider other)
         {
-            Debug.Log(other.tag);
-			Debug.Log(other.name);
+            //Debug.Log(other.tag);
+			//Debug.Log(other.name);
 
 			// Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
 			Collider[] colliders = Physics.OverlapSphere (transform.position, m_ExplosionRadius, m_TankMask);

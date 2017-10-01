@@ -101,7 +101,7 @@ namespace Complete
 			//    // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
 			//    StartCoroutine (GameLoop ());
 			//}
-			m_MessageText.text = "Finish";
+			m_MessageText.text = "Clear";
         }
 
 

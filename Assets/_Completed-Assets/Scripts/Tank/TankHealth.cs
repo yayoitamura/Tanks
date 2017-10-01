@@ -5,22 +5,25 @@ namespace Complete
 {
     public class TankHealth : MonoBehaviour
     {
-        public float m_StartingHealth = 100f;               // The amount of health each tank starts with.
-        public Slider m_Slider;                             // The slider to represent how much health the tank currently has.
-        public Image m_FillImage;                           // The image component of the slider.
-        public Color m_FullHealthColor = Color.green;       // The color the health bar will be when on full health.
+        public float m_StartingHealth = 500f;               // The amount of health each tank starts with.
+        public Slider m_Slider;                             // 現在のタンクの体力を示すスライダー
+		public Image m_FillImage;                           // スライダーの Image コンポーネント
+		public Color m_FullHealthColor = Color.green;       // The color the health bar will be when on full health.
         public Color m_ZeroHealthColor = Color.red;         // The color the health bar will be when on no health.
-        public GameObject m_ExplosionPrefab;                // A prefab that will be instantiated in Awake, then used whenever the tank dies.
+        public GameObject m_ExplosionPrefab;                // タンクが倒されると使用されるプレハブ
 
-        private AudioSource m_ExplosionAudio;               // The audio source to play when the tank explodes.
+		private AudioSource m_ExplosionAudio;               // The audio source to play when the tank explodes.
         private ParticleSystem m_ExplosionParticles;        // The particle system the will play when the tank is destroyed.
-        private float m_CurrentHealth;                      // How much health the tank currently has.
-        private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
+        private float m_CurrentHealth;                      // 現在のタンクの体力値
+		private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
 
         private void Awake ()
         {
-            // Instantiate the explosion prefab and get a reference to the particle system on it.
-            m_ExplosionParticles = Instantiate (m_ExplosionPrefab).GetComponent<ParticleSystem> ();
+			//爆発のプレハブをインスタンスにして、そのパーティクルシステムへの参照を取得
+			// インスタンスにしたプレハブのオーディオソースへの参照を取得
+			// プレハブを無効にし、必要な時に有効にできるようにします。
+			// Instantiate the explosion prefab and get a reference to the particle system on it.
+			m_ExplosionParticles = Instantiate (m_ExplosionPrefab).GetComponent<ParticleSystem> ();
 
             // Get a reference to the audio source on the instantiated prefab.
             m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource> ();
@@ -32,8 +35,10 @@ namespace Complete
 
         private void OnEnable()
         {
-            // When the tank is enabled, reset the tank's health and whether or not it's dead.
-            m_CurrentHealth = m_StartingHealth;
+			// タンクが有効にされるとき、タンクの体力をリセットし、倒されていない状態にリセットします。
+			// 体力スライダーの値と色を更新
+			// When the tank is enabled, reset the tank's health and whether or not it's dead.
+			m_CurrentHealth = m_StartingHealth;
             m_Dead = false;
 
             // Update the health slider's value and color.
@@ -43,8 +48,11 @@ namespace Complete
 
         public void TakeDamage (float amount)
         {
-            // Reduce current health by the amount of damage done.
-            m_CurrentHealth -= amount;
+			// 受けたダメージに基づいて現在の体力を削減
+			// 適切な UI 要素に変更
+			// 現在の体力が 0 を下回り、かつ、まだ登録されていなければ、 OnDeath を呼び出します。
+			// Reduce current health by the amount of damage done.
+			m_CurrentHealth -= amount;
 
             // Change the UI elements appropriately.
             SetHealthUI ();
@@ -59,8 +67,10 @@ namespace Complete
 
         private void SetHealthUI ()
         {
-            // Set the slider's value appropriately.
-            m_Slider.value = m_CurrentHealth;
+			// スライダーに適切な値を設定
+			// 開始時に対する現在の体力のパーセントに基づいて、選択した色でバーを満たします。
+			// Set the slider's value appropriately.
+			m_Slider.value = m_CurrentHealth;
 
             // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
             m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
@@ -69,8 +79,13 @@ namespace Complete
 
         private void OnDeath ()
         {
-            // Set the flag so that this function is only called once.
-            m_Dead = true;
+			// フラグを設定して、この関数が1 度しか呼び出されないようにします。
+			// インスタンスにした爆発のプレハブをタンクの位置に移動し、有効にします。
+			// タンクの爆発のパーティクルシステムを再生します。
+			// タンクの爆発のサウンドエフェクトを再生します。
+			// タンクをオフにします。
+			// Set the flag so that this function is only called once.
+			m_Dead = true;
 
             // Move the instantiated explosion prefab to the tank's position and turn it on.
             m_ExplosionParticles.transform.position = transform.position;
@@ -88,7 +103,7 @@ namespace Complete
 
 
 		void OnTriggerEnter(Collider other) {
-
+            Debug.Log(other.tag);
 			if (other.ToString () == "Hp (UnityEngine.BoxCollider)")
 			{
 				m_CurrentHealth += 10;
@@ -98,11 +113,12 @@ namespace Complete
 
 			else if (other.tag == "Enemy")
 				{
+                Debug.Log("enemy");
 				float damage = 500;
 				TakeDamage (damage);
 
 				}
-					
+	
 				
 		}
 

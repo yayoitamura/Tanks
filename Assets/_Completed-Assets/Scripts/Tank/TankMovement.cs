@@ -154,3 +154,21 @@ namespace Complete
 
     }
 }
+
+
+
+/*
+ * 
+ *             while (!OneTankLeft())
+ * 
+
+        private void GamePlayEnd() {
+            if(m_Boss.BossDestroy == true) {
+                
+            }
+        }
+ * 
+ * 
+ * 
+ * 
+ */

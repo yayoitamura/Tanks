@@ -48,6 +48,7 @@ namespace Complete
 
         public void TakeDamage (float amount)
         {
+            Debug.Log(m_CurrentHealth + "Tank_Current_mae");
 			// 受けたダメージに基づいて現在の体力を削減
 			// 適切な UI 要素に変更
 			// 現在の体力が 0 を下回り、かつ、まだ登録されていなければ、 OnDeath を呼び出します。
@@ -62,6 +63,8 @@ namespace Complete
             {
                 OnDeath ();
             }
+            Debug.Log(amount + "Tank_Damage");
+            Debug.Log(m_CurrentHealth + "Tank_Current");
         }
 
 
@@ -103,7 +106,6 @@ namespace Complete
 
 
 		void OnTriggerEnter(Collider other) {
-            Debug.Log(other.tag);
 			if (other.ToString () == "Hp (UnityEngine.BoxCollider)")
 			{
 				m_CurrentHealth += 10;
@@ -111,13 +113,12 @@ namespace Complete
 
 			}
 
-			else if (other.tag == "Enemy")
-				{
-                Debug.Log("enemy");
-				float damage = 500;
-				TakeDamage (damage);
+			//else if (other.tag == "Enemy")
+				//{
+				//float damage = 500;
+				//TakeDamage (damage);
 
-				}
+				//}
 	
 				
 		}

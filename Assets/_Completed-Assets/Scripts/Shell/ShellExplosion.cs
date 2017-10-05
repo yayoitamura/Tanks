@@ -4,59 +4,59 @@ namespace Complete
 {
     public class ShellExplosion : MonoBehaviour
     {
-        public LayerMask m_TankMask;                        // Used to filter what the explosion affects, this should be set to "Players".
-        public ParticleSystem m_ExplosionParticles;         // Reference to the particles that will play on explosion.
-        public AudioSource m_ExplosionAudio;                // Reference to the audio that will play on explosion.
-        public float m_MaxDamage = 100f;                    // The amount of damage done if the explosion is centred on a tank.
-        public float m_ExplosionForce = 1000f;              // The amount of force added to a tank at the centre of the explosion.
-        public float m_MaxLifeTime = 2f;                    // The time in seconds before the shell is removed.
-        public float m_ExplosionRadius = 5f;                // The maximum distance away from the explosion tanks can be and are still affected.
+		public LayerMask m_TankMask;                        // 爆発が影響するものをフィルタリングするために使用。ここでは、"プレイヤー" に設定されます。
+		public ParticleSystem m_ExplosionParticles;         // 爆発時に再生するパーティクルへの参照
+		public AudioSource m_ExplosionAudio;                // 爆発時に再生するオーディオへの参照
+		public float m_MaxDamage = 100f;                    // タンクが爆心にある場合に、タンクに与えられるダメージ量
+		public float m_ExplosionForce = 1000f;              // タンクが爆心にある場合に、タンクに与えられる力の量
+		public float m_MaxLifeTime = 2f;                       // 砲弾が削除されるまでの秒数
+		public float m_ExplosionRadius = 5f;                // タンクに影響を及ぼすことが可能な爆発からの最大距離
 
 
-        private void Start ()
+		private void Start ()
         {
-            // If it isn't destroyed by then, destroy the shell after it's lifetime.
-            Destroy (gameObject, m_MaxLifeTime);
+			// これまでに破棄されていない場合は、生存期間が過ぎたら砲弾を破棄します。
+			Destroy (gameObject, m_MaxLifeTime);
         }
 
 
         private void OnTriggerEnter (Collider other)
         {
-            //Debug.Log(other.tag);
+            Debug.Log(other.tag);
 			//Debug.Log(other.name);
 
-			// Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
+			// 砲弾の現在の位置から爆破半径内にあるコライダーすべてを集めます
 			Collider[] colliders = Physics.OverlapSphere (transform.position, m_ExplosionRadius, m_TankMask);
-  
-            // Go through all the colliders...
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                // ... and find their rigidbody.
-                Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody> ();
 
-                // If they don't have a rigidbody, go on to the next collider.
-                if (!targetRigidbody)
+			// すべてのコライダーを確認します...
+			for (int i = 0; i < colliders.Length; i++)
+            {
+				// ... そして、リジッドボディを見つけます
+				Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody> ();
+
+				// リジッドボディがなければ、次のコライダーをチェックします
+				if (!targetRigidbody)
                     continue;
 
-                // Add an explosion force.
-                targetRigidbody.AddExplosionForce (m_ExplosionForce, transform.position, m_ExplosionRadius);
+				// 爆発の力を加えます
+				targetRigidbody.AddExplosionForce (m_ExplosionForce, transform.position, m_ExplosionRadius);
 
 				//Boss/Playerへのダメージを渡す
-                // Find the TankHealth script associated with the rigidbody.
-                Boss targetBoss = targetRigidbody.GetComponent<Boss> ();
+				// リジッドボディに関連する TankHealth スクリプトを見つけます
+				Boss targetBoss = targetRigidbody.GetComponent<Boss> ();
                 TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
 
-                // If there is no TankHealth script attached to the gameobject, go on to the next collider.
-                if (!targetBoss && !targetHealth)
+				// ゲームオブジェクトにアタッチされた TankHealth スクリプトがなければ、次のコライダーをチェックします
+				if (!targetBoss && !targetHealth)
                 {
                     continue;
                     
                 } else if (targetHealth){
+					//砲弾からの距離に基づいて、ターゲットが受けるダメージ量を計算
 					float damage = CalculateDamage(targetRigidbody.position);
 
-					// Deal this damage to the tank.
-                    targetHealth.TakeDamage(damage);
-					Debug.Log(damage);
+					// このダメージをタンクに適用
+					targetHealth.TakeDamage(damage);
                 } else if (targetBoss)
 				{
 					float damage = CalculateDamage(targetRigidbody.position);
@@ -73,17 +73,17 @@ namespace Complete
                 //Debug.Log(damage);
             }
 
-            // Unparent the particles from the shell.
-            m_ExplosionParticles.transform.parent = null;
+			// 砲弾とパーティクルの親子関係を解除
+			m_ExplosionParticles.transform.parent = null;
 
-            // Play the particle system.
-            m_ExplosionParticles.Play();
+			// パーティクルシステムを再生
+			m_ExplosionParticles.Play();
 
-            // Play the explosion sound effect.
-            m_ExplosionAudio.Play();
+			// 爆発のサウンドエフェクトを再生
+			m_ExplosionAudio.Play();
 
-            // Once the particles have finished, destroy the gameobject they are on.
-            ParticleSystem.MainModule mainModule = m_ExplosionParticles.main;
+			//  パーティクルが終了したら、パーティクルを伴っていたゲームオブジェクトを破棄します.
+			ParticleSystem.MainModule mainModule = m_ExplosionParticles.main;
             Destroy (m_ExplosionParticles.gameObject, mainModule.duration);
 
             // Destroy the shell.
@@ -93,20 +93,20 @@ namespace Complete
 
         private float CalculateDamage (Vector3 targetPosition)
         {
-            // Create a vector from the shell to the target.
-            Vector3 explosionToTarget = targetPosition - transform.position;
+			// 砲弾からターゲットまでのベクトルを作成
+			Vector3 explosionToTarget = targetPosition - transform.position;
 
-            // Calculate the distance from the shell to the target.
-            float explosionDistance = explosionToTarget.magnitude;
+			// 砲弾からターゲットまでの距離を計算
+			float explosionDistance = explosionToTarget.magnitude;
 
-            // Calculate the proportion of the maximum distance (the explosionRadius) the target is away.
-            float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
+			// 最大距離 (爆破半径) に対するターゲットの距離の比率を計算
+			float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
 
-            // Calculate damage as this proportion of the maximum possible damage.
-            float damage = relativeDistance * m_MaxDamage;
+			// ダメージの最大値と距離の比率に基づいて、ダメージを計算
+			float damage = relativeDistance * m_MaxDamage;
 
-            // Make sure that the minimum damage is always 0.
-            damage = Mathf.Max (0f, damage);
+			// メージの最小値は常に 0 
+			damage = Mathf.Max (0f, damage);
 
             return damage;
         }

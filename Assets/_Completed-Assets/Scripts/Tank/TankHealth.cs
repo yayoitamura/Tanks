@@ -19,6 +19,9 @@ namespace Complete
 
         private void Awake ()
         {
+            Debug.Log(m_StartingHealth + "Awake");
+            Debug.Log(m_CurrentHealth + "Awake");
+
 			//爆発のプレハブをインスタンスにして、そのパーティクルシステムへの参照を取得
 			// インスタンスにしたプレハブのオーディオソースへの参照を取得
 			// プレハブを無効にし、必要な時に有効にできるようにします。
@@ -45,6 +48,10 @@ namespace Complete
             SetHealthUI();
         }
 
+        public void EnemyTrigger() {
+            Debug.Log("helth.Enemytrigger");
+            gameObject.SetActive(false);
+        }
 
         public void TakeDamage (float amount)
         {
@@ -80,8 +87,9 @@ namespace Complete
         }
 
 
-        private void OnDeath ()
+        public void OnDeath ()
         {
+            Debug.Log("THealth.OnDerth");
 			// フラグを設定して、この関数が1 度しか呼び出されないようにします。
 			// インスタンスにした爆発のプレハブをタンクの位置に移動し、有効にします。
 			// タンクの爆発のパーティクルシステムを再生します。
@@ -105,6 +113,7 @@ namespace Complete
         }
 
 
+
 		void OnTriggerEnter(Collider other) {
 			if (other.ToString () == "Hp (UnityEngine.BoxCollider)")
 			{
@@ -113,14 +122,13 @@ namespace Complete
 
 			}
 
-			//else if (other.tag == "Enemy")
-				//{
+			else if (other.tag == "Enemy")
+				{
+                OnDeath();
 				//float damage = 500;
 				//TakeDamage (damage);
 
-				//}
-	
-				
+				}				
 		}
 
     }
